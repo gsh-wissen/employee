@@ -4,11 +4,11 @@ services:
     image: 'employee-management-system.jar'
     ports:
       - "8383:8383"
-    #    depends_on:
-    #      PostgreSQL:
-    #        condition: service_healthy
+    depends_on:
+      - PostgreSQL:
+      #- condition: service_healthy
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://PostgreSQL:5432/postgres
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://192.168.0.105:5432/postgres
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=password
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
