@@ -6,7 +6,7 @@ pipeline {
       stages {
         stage('Hello') {
             steps {
-                echo 'Hello World'
+                echo 'Employee-management-system'
             }
         }
         stage('Build') {
@@ -15,6 +15,13 @@ pipeline {
                 sh 'mvn clean install -DskipTests=true'
             }
         }
+        stage('Docker') {
+                    steps {
+                        script {
+                                 docker.build("employee-management-system.jar")
+                                }
+                    }
+                }
         stage('Test') {
             steps {
                 echo 'Test..'
