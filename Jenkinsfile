@@ -39,8 +39,8 @@ pipeline {
                                     def imageName= docker.build("employee-management-system.jar")
                                     imageName.push()
                                  }*/
-                            dockerImage = docker.build "${IMAGE_REPO_NAME}"
-                            sh "docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${IMAGE_TAG}"
+                            docker.build("employee-management-system.jar")
+                            sh "docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
                              }
                           }                   
                     }       
