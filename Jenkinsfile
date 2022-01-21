@@ -26,7 +26,7 @@ pipeline {
           stage('Docker') {
                     steps {
                         script {
-                             docker.withRegistry("https://387115656091.dkr.ecr.ap-south-1.amazonaws.com","ecr:ap-south-1:AWS-credentials")
+                             docker.withRegistry("https://387115656091.dkr.ecr.ap-south-1.amazonaws.com/capitalone_poc","ecr:ap-south-1:AWS-credentials")
                                  {
                                     def imageName= docker.build("employee-management-system.jar")
                                     imageName.push()
