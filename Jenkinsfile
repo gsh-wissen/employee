@@ -3,6 +3,15 @@ pipeline {
     tools{
         maven '3.8.4'
     }
+    
+    environment {
+        AWS_ACCOUNT_ID="387115656091"
+        AWS_DEFAULT_REGION="ap-south-1" 
+        IMAGE_REPO_NAME="capitalone_poc"
+        IMAGE_TAG="CapitalOneIMG"
+        REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
+    }
+    
       stages {
         stage('Hello') {
             steps {
@@ -15,13 +24,31 @@ pipeline {
                 sh 'mvn clean install -DskipTests=true'
             }
         }
-        stage('Docker') {
+/*        stage('Docker') {
                     steps {
                         script {
                                  docker.build("employee-management-system.jar")
                                 }
                     }
                 }
+*/               
+          
+          stage('Docker') {
+                steps {
+                    script {
+                         /*docker.withRegistry("https://387115656091.dkr.ecr.ap-south-1.amazonaws.com/capitalone_poc","ecr:ap-south-1:AWS-credentials")
+                             {
+                                def imageName= docker.build("employee-management-system.jar")
+                                imageName.push()
+                             }
+                          */
+                            docker.build("employee-management-system.jar")
+                            echo 'Docker build successfully!'
+                            sh "docker tag ${IMAGE_REPO_NAME}:${IMAGE_TAG} ${REPOSITORY_URI}:$IMAGE_TAG"                      
+                            sh "docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
+                         }
+                    }                   
+                }       
         stage('Test') {
             steps {
                 echo 'Test..'
